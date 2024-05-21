@@ -27,6 +27,7 @@ export default function NavBar() {
       icon: <BsHouse color="#fff" size={20} />,
       label: "Inicio",
       onClick: () => (window.location.href = "/dashboard"),
+      style: {marginTop: "2rem"},
     },
   ];
 

@@ -4,17 +4,20 @@
 import Dragger from "antd/es/upload/Dragger";
 import MainSectionComponent from "../components/mainSectionComponent/main-section-component";
 import "./style.css";
-import {Button, UploadFile, UploadProps, message} from "antd";
+import {Button, Row, UploadFile, UploadProps, message} from "antd";
 import {InboxOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
+import {upload} from "@/service/api";
 
 export default function Dashboard() {
-  const [file, setFile] = useState<UploadFile>();
-  useEffect(() => {});
+  const [file, setFile] = useState<any>(null);
 
   async function get() {
     if (file) {
-      console.log(file);
+      await upload(file).then(() => {
+        setFile(null);
+        message.success("Upload realizado com sucesso!");
+      });
     }
   }
 
@@ -24,7 +27,6 @@ export default function Dashboard() {
     listType: "picture",
     onChange(info) {
       const {status} = info.file;
-      console.log("🚀 ~ onChange ~ status:", status);
       if (status !== "uploading") {
         setFile(info.file);
         console.log(info.file, info.fileList);
@@ -53,18 +55,19 @@ export default function Dashboard() {
                 placeContent: "center",
               }}
             >
-              <Dragger {...props}>
-                <p className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </p>
-                <p className="ant-upload-text">
-                  Clique ou arraste sua fatura em pdf para fazer upload
-                </p>
-              </Dragger>
-              <br />
-              <Button onClick={() => get()} type="primary">
-                Salvar
-              </Button>
+              <Row>
+                <Dragger  {...props}>
+                  <p className="ant-upload-drag-icon">
+                    <InboxOutlined />
+                  </p>
+                  <p className="ant-upload-text">
+                    Clique ou arraste sua fatura em pdf para fazer upload
+                  </p>
+                </Dragger>
+                <Button onClick={() => get()} type="primary">
+                  Salvar
+                </Button>
+              </Row>
             </div>
           </>
         }
