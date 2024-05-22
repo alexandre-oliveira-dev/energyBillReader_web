@@ -8,14 +8,16 @@ import {FaFilePdf} from "react-icons/fa";
 import {FiDownload} from "react-icons/fi";
 import "./style.css";
 import {useAuth} from "@/service/useAuth";
+import {PriceFormater} from "../common/price-formater";
 
 export default function LibInvoices() {
   const [data, setData] = useState<any[]>([]);
   const {user} = useAuth();
+
+  const format = new PriceFormater();
   useEffect(() => {
     async function get() {
-      const res = await getFiles();
-      console.log("🚀 ~ get ~ res:", res);
+      const res = await getFiles(user?.uid);
       setData(res?.data);
     }
     get();
@@ -46,8 +48,13 @@ export default function LibInvoices() {
                   return (
                     <Card
                       key={i.id}
-                      title={i.fileName}
+                      title={
+                        <Row>
+                          {i?.invoice?.monthRef} - {i?.invoice.clientNumber}
+                        </Row>
+                      }
                       style={{
+                        minWidth: "250px",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
@@ -72,6 +79,10 @@ export default function LibInvoices() {
                       >
                         <FiDownload size={20}></FiDownload>
                       </Button>
+                      <br />
+                      <Typography.Title level={3}>
+                        {format.formater({price: String(i.invoice.total)})}
+                      </Typography.Title>
                     </Card>
                   );
                 })}

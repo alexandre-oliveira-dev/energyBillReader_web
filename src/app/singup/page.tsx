@@ -1,21 +1,32 @@
 "use client";
 
-import {Button, Col, Input, Typography} from "antd";
-import "./page.css";
+import {Button, Col, Input, Typography, notification} from "antd";
+import "../page.css";
 import Link from "next/link";
 import {useState} from "react";
-import {signInWithEmailAndPassword} from "firebase/auth";
+import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "@/service/useAuth";
+import {createUser} from "@/service/api";
 
-export default function Login() {
+export default function SingUp() {
   const [email, setEmail] = useState("");
   const [passWord, setPassword] = useState("");
 
   async function login() {
-    await signInWithEmailAndPassword(auth, email, passWord)
-      .then(() => {
-        window.location.href = "/dashboard";
-      })
+    await createUserWithEmailAndPassword(auth, email, passWord)
+      .then(async user => {
+        await createUser({
+          id: user.user.uid,
+          email,
+        }).then(() => {
+          notification.success({
+            message: "Usuário criado com sucesso",
+            onClose() {
+              window.location.href = "/";
+            },
+          });
+        });
+      })  
       .catch(err => console.log(err));
   }
 
@@ -35,7 +46,7 @@ export default function Login() {
           padding: "3rem",
         }}
       >
-        <Typography.Title>Entrar</Typography.Title>
+        <Typography.Title>Criar usuário</Typography.Title>
 
         <Col style={{width: "70%"}}>
           <label style={{fontSize: "20px"}}>Email</label>
@@ -63,7 +74,7 @@ export default function Login() {
             Entrar
           </Button>
         </Col>
-        <Link href={"/singup"}>Fazer cadastro</Link>
+        <Link href={"/"}>Fazer Login</Link>
       </div>
     </div>
   );

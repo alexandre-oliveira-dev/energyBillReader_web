@@ -20,7 +20,7 @@ export default function Dashboard() {
 
   async function uploadFile() {
     if (file) {
-      await upload(file).then(() => {
+      await upload(file, user.uid).then(() => {
         setFile(null);
         message.success("Upload realizado com sucesso!");
       });
