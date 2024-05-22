@@ -1,12 +1,14 @@
 import {UploadFile} from "antd";
 import axios from "axios";
 
+const isLocalhost = window.location.href.includes("localhost");
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_URL_API,
-  // baseURL: "http://localhost:5000",
+  baseURL: !isLocalhost
+    ? process.env.NEXT_PUBLIC_URL_API
+    : "http://localhost:5000",
 });
 
-export async function upload(file: UploadFile,userId:string) {
+export async function upload(file: UploadFile, userId: string) {
   if (file.originFileObj) {
     try {
       const form = new FormData();
@@ -23,7 +25,7 @@ export async function upload(file: UploadFile,userId:string) {
   }
 }
 
-export async function getFiles(userId:string) {
+export async function getFiles(userId: string) {
   try {
     const res = await api.get(`/files/${userId}`);
     return res;
