@@ -1,4 +1,6 @@
-import {UploadFile} from "antd";
+'use client'
+
+import { UploadFile } from "antd";
 import axios from "axios";
 
 const isLocalhost = window.location.href.includes("localhost");
