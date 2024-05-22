@@ -1,0 +1,7 @@
+.removeHover:hover {
+    background-color: none !important;
+}
+
+.removeHover {
+    width: auto !important;
+}

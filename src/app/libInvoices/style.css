@@ -1,0 +1,6 @@
+.ant-card-body {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,0 +1,12 @@
+.container-login {
+    width: 100vw;
+    height: 100vh;
+    background-color: #001529;
+    display: grid;
+    place-content: center;
+}
+
+.ant-card-body {
+    width: 100% !important;
+
+}
