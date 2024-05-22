@@ -2,7 +2,8 @@ import {UploadFile} from "antd";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_URL_API,
+  // baseURL: process.env.NEXT_PUBLIC_URL_API,
+  baseURL: "http://localhost:5000",
 });
 
 export async function upload(file: UploadFile, userId: string) {
