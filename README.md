@@ -14,6 +14,8 @@
 - Na página biblioteca de faturas é possivel realizar o download da fatura ou exclui -la, e tambem visualizar algumas informações como, numero do cliente, total da faura e mês de referência.
 - Na página dashboard é possivel visualizar dois gráficos passando o número do cliente, o primeiro sobre o consumo em KWh e o segundo os valores sobre esse consumo.
 
+  ## Link do site: https://energy-bill-reader-web.vercel.app/
+
   ## Obs
   Versão mobile não foi desenvolvida, pois se trata de um dashboard desktop.
 
