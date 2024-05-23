@@ -9,6 +9,7 @@ import {InboxOutlined} from "@ant-design/icons";
 import {useState} from "react";
 import {upload} from "@/service/api";
 import {useAuth} from "@/service/useAuth";
+import Footer from "../components/footer/footer.compoent";
 
 export default function Dashboard() {
   const [file, setFile] = useState<any>(null);
@@ -55,11 +56,13 @@ export default function Dashboard() {
         component={
           <>
             <div
+              className="container-dashboard"
               style={{
                 width: "100%",
-                height: "100%",
+                height: "100vh",
                 display: "grid",
                 placeContent: "center",
+                position: "relative",
               }}
             >
               <Typography.Title level={2}>
@@ -88,6 +91,7 @@ export default function Dashboard() {
                   Salvar
                 </Button>
               </Row>
+              <Footer></Footer>
             </div>
           </>
         }

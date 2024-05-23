@@ -1,6 +1,6 @@
 "use client";
 
-import {Button, Col, Input, Typography, notification} from "antd";
+import {Button, Col, Input, Typography, message, notification} from "antd";
 import "./page.css";
 import Link from "next/link";
 import {useState} from "react";
@@ -14,6 +14,7 @@ export default function Login() {
   const authErrorInvalidCredencials = AuthErrorCodes.INVALID_LOGIN_CREDENTIALS;
 
   async function login() {
+    if (!email && !passWord) return message.info("Insira seu email e senha !");
     try {
       await signInWithEmailAndPassword(auth, email, passWord);
       window.location.href = "/dashboard";

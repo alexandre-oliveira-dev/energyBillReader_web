@@ -11,7 +11,6 @@ export default function MainSectionComponent({component}: MainSectionProps) {
   return (
     <section className="container-main-section">
       <NavBar></NavBar>
-
       <div className="main-content">{component}</div>
     </section>
   );

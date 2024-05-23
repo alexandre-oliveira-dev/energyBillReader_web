@@ -8,15 +8,25 @@ import {
   PointElement,
   Tooltip,
   ChartOptions,
+  BarElement,
   Chart,
 } from "chart.js";
-import {Line} from "react-chartjs-2";
+import {Line, Bar} from "react-chartjs-2";
 import {useEffect, useState} from "react";
 import {getInvoicesByClientNumber} from "@/service/api";
 import {useAuth} from "@/service/useAuth";
-import {Card, Input, Row, Typography} from "antd";
+import {Card, Col, Input, Row, Typography} from "antd";
+import {useDebounce} from "../hooks/useDebounced";
+import Footer from "../components/footer/footer.compoent";
 
-Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
+Chart.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  BarElement
+);
 
 export default function Graphics() {
   const {user} = useAuth();
@@ -38,13 +48,18 @@ export default function Graphics() {
     get();
   }, [clientNumber, user]);
 
+  const debouncedChangeHandler = useDebounce((newValue: string) => {
+    setClientNumber(newValue);
+  }, 2000);
+
   const xLabels = data?.map(item => item.monthReference);
   const values = data?.map(item => item.eeQtd);
   const values2 = data?.map(item => parseFloat(item.eeValue));
 
   const options: ChartOptions = {
     responsive: true,
-
+    color: "red",
+    backgroundColor: "#1677FF",
     scales: {
       y: {
         beginAtZero: true,
@@ -85,38 +100,72 @@ export default function Graphics() {
             <div
               style={{
                 width: "100%",
-                minHeight: "100%",
+                height: "100%",
                 backgroundColor: "#f1f1f1",
                 padding: "2rem",
+                overflowY: "auto",
+                position: "relative",
               }}
             >
               <Typography.Title level={1}>
                 Dashboard de faturas
               </Typography.Title>
               <div
-                style={{margin: "2rem 0 1rem 0 2rem", maxWidth: "max-content"}}
+                style={{
+                  margin: "2rem 0 1rem 0 2rem",
+                  backgroundColor: "#fff",
+                  width: "100%",
+                  padding: "2rem",
+                }}
               >
-                <Typography.Title level={3}>
+                <Typography.Title style={{color: "#5d5d5d"}} level={3}>
                   Digite o número do cliente para visualizar os graficos
                 </Typography.Title>
 
                 <Input
                   style={{height: 40}}
                   required
+                  value={clientNumber}
                   placeholder="Digite o numero do cliente"
-                  onChange={e => setClientNumber(e.target.value)}
+                  onChange={e => {
+                    const newValue = e.target.value;
+
+                    setClientNumber(e.target.value);
+                    debouncedChangeHandler(newValue);
+                  }}
                 ></Input>
               </div>
               <br />
               <br />
-              <Row style={{gap: "2rem"}}>
-                <Card title="Energia elétrica (kWh)" style={{width: "700px"}}>
-                  <Line data={chartData || []} options={options as any}></Line>
+              <Row style={{gap: "2rem", width: "100%"}}>
+                <Card
+                  title={
+                    <Col>
+                      <h2>Energia elétrica (kWh)</h2>
+                      <Typography.Paragraph style={{color: "#5d5d5d"}}>
+                        Quantidade de KWh utilizados
+                      </Typography.Paragraph>
+                    </Col>
+                  }
+                  style={{padding: "2rem", flex: 1}}
+                >
+                  <Bar data={chartData || []} options={options as any}></Bar>
                 </Card>
-                <Card title="Valores das faturas R$" style={{width: "700px"}}>
+                <Card
+                  title={
+                    <Col>
+                      <h2>Valores das faturas R$</h2>
+                      <Typography.Paragraph style={{color: "#5d5d5d"}}>
+                        Valores referentes a quantidade de KWh utilizados
+                      </Typography.Paragraph>
+                    </Col>
+                  }
+                  style={{padding: "2rem", flex: 1}}
+                >
                   <Line data={chartData2 || []} options={options as any}></Line>
                 </Card>
               </Row>
+              <Footer></Footer>
             </div>
           </>
         }

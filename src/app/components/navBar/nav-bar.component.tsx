@@ -1,14 +1,14 @@
 "use client";
 
 import React, {useEffect, useState} from "react";
-import type {MenuProps} from "antd";
+import {MenuProps} from "antd";
 import {Menu} from "antd";
 import {BsHouse} from "react-icons/bs";
-import {BiMenu} from "react-icons/bi";
+import {BiMenu, BiUser} from "react-icons/bi";
 import {IoLibrary} from "react-icons/io5";
 import {PiSignOutLight} from "react-icons/pi";
 import {signOut} from "firebase/auth";
-import {auth} from "@/service/useAuth";
+import {auth, useAuth} from "@/service/useAuth";
 import "./style.css";
 import {MdDashboard} from "react-icons/md";
 
@@ -16,17 +16,21 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 export default function NavBar() {
   const [collapsed, setCollapsed] = useState(false);
-  const [pathName, setPathName] = useState<string>("1");
-
-  useEffect(() => {
-    setPathName(window?.location.pathname.split("/")[1]);
-  }, []);
+  const [itemSelected, setItemSelected] = useState<React.Key>();
+  const {user} = useAuth();
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const items: MenuItem[] = [
+    {
+      key: "useremail",
+      className: "userEmail",
+      label: `Olá ${user?.email}`,
+      icon: <BiUser size={20} />,
+    },
     {
       key: "1",
       onClick: toggleCollapsed,
@@ -71,19 +75,35 @@ export default function NavBar() {
     },
   ];
 
-  const itemSelected = items[items.findIndex(i => i?.key === pathName)]?.key;
+  useEffect(() => {
+    const pathName = window?.location.pathname.split("/")[1];
+    setItemSelected(items[items.findIndex(i => i?.key === pathName)]?.key);
+  }, [itemSelected, items]);
 
   return (
-    <div style={{width: 256, height: "100%", display: "flex"}}>
-      <Menu
-        style={{height: "100vh", position: "relative"}}
-        defaultSelectedKeys={[String(itemSelected)]}
-        defaultOpenKeys={["sub1"]}
-        mode="inline"
-        theme="dark"
-        inlineCollapsed={collapsed}
-        items={items}
-      />
+    <div
+      style={{
+        width: "auto",
+        height: "100%",
+        display: "flex",
+      }}
+    >
+      {itemSelected && (
+        <Menu
+          className="navbar"
+          style={{
+            height: "100vh",
+            position: "relative",
+            zIndex: 1000,
+          }}
+          defaultSelectedKeys={[String(itemSelected)]}
+          defaultOpenKeys={["sub1"]}
+          mode="inline"
+          theme="dark"
+          inlineCollapsed={collapsed}
+          items={items}
+        />
+      )}
     </div>
   );
 }
