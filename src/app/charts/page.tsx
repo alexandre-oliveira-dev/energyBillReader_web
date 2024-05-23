@@ -1,29 +1,25 @@
 "use client";
-import {Chart, ChartOptions} from "chart.js";
 import MainSectionComponent from "../components/mainSectionComponent/main-section-component";
 import "./style.css";
 import {
-  Chart as ChartJS,
   LineElement,
   CategoryScale,
   LinearScale,
   PointElement,
-  Title,
   Tooltip,
-  Legend,
+  ChartOptions,
+  Chart,
 } from "chart.js";
 import {Line} from "react-chartjs-2";
 import {useEffect, useState} from "react";
 import {getInvoicesByClientNumber} from "@/service/api";
 import {useAuth} from "@/service/useAuth";
 import {Card, Input, Row, Typography} from "antd";
-import { PriceFormater } from "../common/price-formater";
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 
 export default function Graphics() {
-  const { user } = useAuth();
-  const format = new PriceFormater();
+  const {user} = useAuth();
 
   const [clientNumber, setClientNumber] = useState<string>();
   const [data, setData] = useState<any[]>([]);
@@ -45,7 +41,6 @@ export default function Graphics() {
   const xLabels = data?.map(item => item.monthReference);
   const values = data?.map(item => item.eeQtd);
   const values2 = data?.map(item => parseFloat(item.eeValue));
-  console.log("🚀 ~ Graphics ~ values2:", values2);
 
   const options: ChartOptions = {
     responsive: true,
@@ -81,7 +76,6 @@ export default function Graphics() {
       },
     ],
   };
-  console.log("🚀 ~ Graphics ~ chartData2:", chartData2);
 
   return (
     <>
@@ -103,8 +97,7 @@ export default function Graphics() {
                 style={{margin: "2rem 0 1rem 0 2rem", maxWidth: "max-content"}}
               >
                 <Typography.Title level={3}>
-                  Digite o número do cliente para visualizar os
-                  graficos
+                  Digite o número do cliente para visualizar os graficos
                 </Typography.Title>
 
                 <Input

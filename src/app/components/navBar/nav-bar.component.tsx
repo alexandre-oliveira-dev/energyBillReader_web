@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import type {MenuProps} from "antd";
 import {Menu} from "antd";
 import {BsHouse} from "react-icons/bs";
@@ -10,12 +10,17 @@ import {PiSignOutLight} from "react-icons/pi";
 import {signOut} from "firebase/auth";
 import {auth} from "@/service/useAuth";
 import "./style.css";
-import {MdDashboard, MdGraphicEq} from "react-icons/md";
+import {MdDashboard} from "react-icons/md";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 export default function NavBar() {
   const [collapsed, setCollapsed] = useState(false);
+  const [pathName, setPathName] = useState<string>("1");
+
+  useEffect(() => {
+    setPathName(window?.location.pathname.split("/")[1]);
+  }, []);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -44,10 +49,10 @@ export default function NavBar() {
       style: {marginTop: "2rem", fontSize: 18},
     },
     {
-      key: "graphics",
+      key: "charts",
       icon: <MdDashboard color="#fff" size={20} />,
       label: "Dashboard",
-      onClick: () => (window.location.href = "/graphics"),
+      onClick: () => (window.location.href = "/charts"),
       style: {marginTop: "2rem", fontSize: 18},
     },
     {
@@ -66,25 +71,19 @@ export default function NavBar() {
     },
   ];
 
-  console.log(window.location.pathname);
-
-  const pathName = window.location.pathname.split("/")[1];
   const itemSelected = items[items.findIndex(i => i?.key === pathName)]?.key;
-  console.log("🚀 ~ NavBar ~ itemSelected:", itemSelected);
 
   return (
     <div style={{width: 256, height: "100%", display: "flex"}}>
-      {pathName && (
-        <Menu
-          style={{height: "100vh", position: "relative"}}
-          defaultSelectedKeys={[String(itemSelected)]}
-          defaultOpenKeys={["sub1"]}
-          mode="inline"
-          theme="dark"
-          inlineCollapsed={collapsed}
-          items={items}
-        />
-      )}
+      <Menu
+        style={{height: "100vh", position: "relative"}}
+        defaultSelectedKeys={[String(itemSelected)]}
+        defaultOpenKeys={["sub1"]}
+        mode="inline"
+        theme="dark"
+        inlineCollapsed={collapsed}
+        items={items}
+      />
     </div>
   );
 }
