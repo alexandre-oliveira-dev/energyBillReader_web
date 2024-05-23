@@ -4,13 +4,15 @@ import {Button, Col, Input, Typography, notification} from "antd";
 import "../page.css";
 import Link from "next/link";
 import {useState} from "react";
-import {createUserWithEmailAndPassword} from "firebase/auth";
+import {AuthErrorCodes, createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "@/service/useAuth";
 import {createUser} from "@/service/api";
 
 export default function SingUp() {
   const [email, setEmail] = useState("");
   const [passWord, setPassword] = useState("");
+
+  const authErrorInvalidCredencials = AuthErrorCodes.EMAIL_EXISTS;
 
   async function login() {
     await createUserWithEmailAndPassword(auth, email, passWord)
@@ -26,8 +28,13 @@ export default function SingUp() {
             },
           });
         });
-      })  
-      .catch(err => console.log(err));
+      })
+      .catch(error => {
+         if (String(error).includes(authErrorInvalidCredencials))
+           notification.error({
+             message: "Este usuário ja existe!",
+           });
+      });
   }
 
   return (

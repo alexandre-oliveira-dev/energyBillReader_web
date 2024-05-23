@@ -1,22 +1,28 @@
 "use client";
 
-import {Button, Col, Input, Typography} from "antd";
+import {Button, Col, Input, Typography, notification} from "antd";
 import "./page.css";
 import Link from "next/link";
 import {useState} from "react";
-import {signInWithEmailAndPassword} from "firebase/auth";
+import {signInWithEmailAndPassword, AuthErrorCodes} from "firebase/auth";
 import {auth} from "@/service/useAuth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [passWord, setPassword] = useState("");
 
+  const authErrorInvalidCredencials = AuthErrorCodes.INVALID_LOGIN_CREDENTIALS;
+
   async function login() {
-    await signInWithEmailAndPassword(auth, email, passWord)
-      .then(() => {
-        window.location.href = "/dashboard";
-      })
-      .catch(err => console.log(err));
+    try {
+      await signInWithEmailAndPassword(auth, email, passWord);
+      window.location.href = "/dashboard";
+    } catch (error) {
+      if (String(error).includes(authErrorInvalidCredencials))
+        notification.error({
+          message: "Email ou senha invalidos",
+        });
+    }
   }
 
   return (

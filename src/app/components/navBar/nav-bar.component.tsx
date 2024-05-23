@@ -10,6 +10,7 @@ import {PiSignOutLight} from "react-icons/pi";
 import {signOut} from "firebase/auth";
 import {auth} from "@/service/useAuth";
 import "./style.css";
+import {MdDashboard, MdGraphicEq} from "react-icons/md";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -43,7 +44,14 @@ export default function NavBar() {
       style: {marginTop: "2rem", fontSize: 18},
     },
     {
-      key: "4",
+      key: "graphics",
+      icon: <MdDashboard color="#fff" size={20} />,
+      label: "Dashboard",
+      onClick: () => (window.location.href = "/graphics"),
+      style: {marginTop: "2rem", fontSize: 18},
+    },
+    {
+      key: "Sair",
       icon: <PiSignOutLight color="#fff" size={20} />,
       label: "Sair",
       onClick: async () =>
