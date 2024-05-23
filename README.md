@@ -6,7 +6,7 @@
 ![image](https://github.com/alexandre-oliveira-dev/energyBillReader_web/assets/125042006/b5e2824e-3fd3-4253-9127-c57f66e68196)
 
 
-## Uso do sitema
+## Uso do sistema
 
 - crie uma conta
 - Faça login
