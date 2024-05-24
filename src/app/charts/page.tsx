@@ -44,6 +44,9 @@ export default function Graphics() {
         setData(res?.data);
         return res;
       }
+      const res = await getInvoicesByClientNumber(user.uid);
+      setData(res?.data);
+      return res;
     }
     get();
   }, [clientNumber, user]);
@@ -52,8 +55,13 @@ export default function Graphics() {
     setClientNumber(newValue);
   }, 2000);
 
-  const xLabels = data?.map(item => item.monthReference);
-  const values = data?.map(item => item.eeQtd);
+  const xLabels = data?.map(
+    item => `${item.monthReference} ${item.clientNumber}`
+  );
+  const cee = data?.map(item => Number(item.eeQtd) + Number(item.esQtd));
+  const ec = data?.map(item => Number(item.ecQtd));
+  const ecValue = data?.map(item => parseFloat(item.ecValue || 0));
+  const total = data?.map(item => parseFloat(item.total?.replace(/\s+/g, "")));
   const values2 = data?.map(item => parseFloat(item.eeValue));
 
   const options: ChartOptions = {
@@ -71,10 +79,17 @@ export default function Graphics() {
     labels: xLabels,
     datasets: [
       {
-        label: "(kWh)",
-        data: values,
+        label: "Consumo de Energia Elétrica (kWh)",
+        data: cee,
         fill: false,
-        borderColor: "rgba(75,192,192,1)",
+        borderColor: "ocean",
+        tension: 0.1,
+      },
+      {
+        label: "Energia Compensada (kWh)",
+        data: ec,
+        fill: false,
+        borderColor: "blue",
         tension: 0.1,
       },
     ],
@@ -83,10 +98,24 @@ export default function Graphics() {
     labels: xLabels,
     datasets: [
       {
-        label: "R$",
+        label: "valor / kwh R$",
         data: values2,
         fill: false,
         borderColor: "rgba(75,192,192,1)",
+        tension: 0.1,
+      },
+      {
+        label: "Total R$",
+        data: total,
+        fill: false,
+        borderColor: "#008000",
+        tension: 0.1,
+      },
+      {
+        label: "Economia GD R$",
+        data: ecValue,
+        fill: false,
+        borderColor: "yellow",
         tension: 0.1,
       },
     ],

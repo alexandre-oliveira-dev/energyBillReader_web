@@ -49,7 +49,7 @@ export async function getInvoices(userId: string) {
 }
 export async function getInvoicesByClientNumber(
   userId: string,
-  clientNumber: string
+  clientNumber?: string
 ) {
   try {
     const res = await api.get(
