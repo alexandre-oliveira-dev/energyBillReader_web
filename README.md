@@ -1,9 +1,10 @@
 
-
 ## Energy bill reader - Dashboard de analise de faturas de energia
 
 ![image](https://github.com/alexandre-oliveira-dev/energyBillReader_web/assets/125042006/6995349e-e744-402b-a756-9f63c667e6d4)
-![image](https://github.com/alexandre-oliveira-dev/energyBillReader_web/assets/125042006/b5e2824e-3fd3-4253-9127-c57f66e68196)
+![image](https://github.com/alexandre-oliveira-dev/energyBillReader_web/assets/125042006/b3c1d4b1-2360-4a93-83fd-d6e9a47fe59f)
+
+
 
 
 ## Uso do sistema
