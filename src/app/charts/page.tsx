@@ -121,6 +121,43 @@ export default function Graphics() {
     ],
   };
 
+  const Summary = () => {
+    return (
+      <Row style={{gap: 10, alignContent: "center"}}>
+        <Row style={{gap: 5, alignItems: "center"}}>
+          <div
+            style={{
+              width: "15px",
+              height: "15px",
+              backgroundColor: "green",
+            }}
+          ></div>
+          <div>Total com impostos</div>
+        </Row>
+        <Row style={{gap: 5, alignItems: "center"}}>
+          <div
+            style={{
+              width: "15px",
+              height: "15px",
+              backgroundColor: "#4BC0C0",
+            }}
+          ></div>
+          Total / kwh
+        </Row>
+        <Row style={{gap: 5, alignItems: "center"}}>
+          <div
+            style={{
+              width: "15px",
+              height: "15px",
+              backgroundColor: "yellow",
+            }}
+          ></div>
+          Economia GD
+        </Row>
+      </Row>
+    );
+  };
+
   return (
     <>
       <MainSectionComponent
@@ -166,7 +203,7 @@ export default function Graphics() {
               </div>
               <br />
               <br />
-              <Row style={{gap: "2rem", width: "100%"}}>
+              <Row style={{gap: "2rem", width: "100%", marginBottom: "1rem"}}>
                 <Card
                   title={
                     <Col>
@@ -187,6 +224,7 @@ export default function Graphics() {
                       <Typography.Paragraph style={{color: "#5d5d5d"}}>
                         Valores referentes a quantidade de KWh utilizados
                       </Typography.Paragraph>
+                      <Summary></Summary>
                     </Col>
                   }
                   style={{padding: "2rem", flex: 1}}
