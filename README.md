@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+## Energy bill reader - Dashboard de analise de faturas de energia
+
+![image](https://github.com/alexandre-oliveira-dev/energyBillReader_web/assets/125042006/6995349e-e744-402b-a756-9f63c667e6d4)
+![image](https://github.com/alexandre-oliveira-dev/energyBillReader_web/assets/125042006/b5e2824e-3fd3-4253-9127-c57f66e68196)
+
+
+## Uso do sistema
+
+- crie uma conta
+- Faça login
+- Na página inicial, faça um updload de uma fatura, das quais foram disponibilizadas para o teste, mas se preferir use esse usuário, contendo algumas faturas já salvas: (email: teste@gmail.com, senha: 123123)
+- Na página biblioteca de faturas é possivel realizar o download da fatura ou exclui -la, e tambem visualizar algumas informações como, numero do cliente, total da faura e mês de referência.
+- Na página dashboard é possivel visualizar dois gráficos passando o número do cliente, o primeiro sobre o consumo em KWh e o segundo os valores sobre esse consumo.
+
+  ## Link do site: https://energy-bill-reader-web.vercel.app/
+
+  ## Obs
+  Versão mobile não foi desenvolvida, pois se trata de um dashboard desktop.
+
+
+
+## Para rodar o sistema localmente
 
 ```bash
+install dependencies
+yarn
+# or
+npm
+
+after =>
+
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
