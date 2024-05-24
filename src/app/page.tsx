@@ -14,7 +14,7 @@ export default function Login() {
   const authErrorInvalidCredencials = AuthErrorCodes.INVALID_LOGIN_CREDENTIALS;
 
   async function login() {
-    if (!email && !passWord) return message.info("Insira seu email e senha !");
+    if (!email || !passWord) return message.info("Insira seu email e senha !");
     try {
       await signInWithEmailAndPassword(auth, email, passWord);
       window.location.href = "/dashboard";
